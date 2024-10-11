@@ -5,16 +5,3 @@ export default function App() {
     <p>hello</p>
   );
 }
-
-
-/*
-ny mapp i utforskaren
-cmd git clone
-
-
-
-
-
-
-
-*/

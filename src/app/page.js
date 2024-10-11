@@ -7,3 +7,14 @@ export default function App() {
 }
 
 
+/*
+ny mapp i utforskaren
+cmd git clone
+
+
+
+
+
+
+
+*/

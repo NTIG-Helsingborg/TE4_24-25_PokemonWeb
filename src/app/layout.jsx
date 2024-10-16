@@ -35,6 +35,9 @@ export default function RootLayout({ children }) {
             <li>
               <Link href={'/fav'}>Favourite</Link>
             </li>
+            <li>
+              <Link href={'/profile'}>Profile</Link>
+            </li>
           </ul>
         </nav>
       </header>

@@ -11,12 +11,8 @@
   "dependencies": {
     "next": "14.2.14",
     "react": "^18",
-<<<<<<< HEAD
-    "react-dom": "^18"
-=======
     "react-dom": "^18",
     "react-router-dom": "^6.27.0"
->>>>>>> 9f0520e085433f40640cc3341c2af0d451facf5c
   },
   "devDependencies": {
     "eslint": "^8",

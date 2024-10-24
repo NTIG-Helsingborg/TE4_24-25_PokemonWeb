@@ -1,3 +1,4 @@
+import { AuthProvider } from './context/AuthContext'; // Import the AuthProvider
 import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <AuthProvider> {/* Wrap your app with AuthProvider */}
         <header>
           <nav style={navStyle}>
             <ul style={ulStyle}>
@@ -38,10 +40,17 @@ export default function RootLayout({ children }) {
                   Favourite
                 </Link>
               </li>
+              <li style={liStyle}>
+                <Link href={"/profile"} style={linkStyle}>
+                  Profile
+                </Link>
+              </li>
             </ul>
           </nav>
         </header>
         {children}
+        </AuthProvider>
+        
       </body>
     </html>
   );

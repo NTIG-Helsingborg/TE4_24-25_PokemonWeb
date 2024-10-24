@@ -1,12 +1,23 @@
 'use client';
 import "./globals.css";
 import React, { useState, useEffect, useCallback } from 'react';
+import { useAuth } from './context/AuthContext.js';
 
 export default function PokemonList() {
+  const { isAuthenticated } = useAuth();
+
   const [pokemons, setPokemons] = useState([]);
   const [visiblePokemons, setVisiblePokemons] = useState([]);
   const [currentBatch, setCurrentBatch] = useState(0);
 
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      window.location.href = '/login'; // Redirect to login page if not authenticated
+    }
+  }, [isAuthenticated]);
+
+  // Function to fetch Pokémon
   const fetchResult = async (id) => {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     const res = await fetch(url);
@@ -14,6 +25,7 @@ export default function PokemonList() {
     return json;
   };
 
+  // Fetch all Pokémon data
   const fetchAllPokemons = async () => {
     const pokemonData = [];
     for (let i = 1; i <= 20; i++) {
@@ -28,7 +40,6 @@ export default function PokemonList() {
     const nextBatchStart = currentBatch * 5;
     const nextBatchEnd = nextBatchStart + 5;
     const nextBatch = pokemons.slice(nextBatchStart, nextBatchEnd);
-    
     setVisiblePokemons(nextBatch);
     setCurrentBatch((prevBatch) => (prevBatch + 1) % Math.ceil(pokemons.length / 5));
   }, [pokemons, currentBatch]);
@@ -54,8 +65,6 @@ export default function PokemonList() {
 
   return (
     <div>
-     
-
       <div id="pokemon-container">
         {visiblePokemons.map((data) => {
           const abilities = data.abilities.map((a) => a.ability.name).join(', ');

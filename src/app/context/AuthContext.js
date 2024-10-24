@@ -1,6 +1,6 @@
 'use client';
 import { createContext, useState, useContext, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter
+import { useRouter } from 'next/navigation';
 
 const AuthContext = createContext();
 
@@ -8,54 +8,55 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
 
-  const isAuthenticated = currentUser !== null; // Determine if user is authenticated
+  const isAuthenticated = currentUser !== null;
 
   // Register user
-  const register = (username, password) => {
+  const register = (email, password) => {
     const users = JSON.parse(localStorage.getItem('users')) || [];
     
-    const userExists = users.find(user => user.username === username);
+    const userExists = users.find(user => user.email === email);
     if (userExists) {
-      alert('User already exists');
+      alert('Email already registered');
       return;
     }
-    
-    const newUser = { username, password }; // Hashing needed in real app
+
+    const newUser = { email, password }; // Store email instead of username
     users.push(newUser);
     
     localStorage.setItem('users', JSON.stringify(users));
     alert('Registration successful');
-    router.push('/login'); // Navigate to the login page after registration
+    router.push('/login'); // Redirect to login page after registration
   };
 
   // Login user
-  const login = (username, password) => {
+  const login = (email, password) => {
     const users = JSON.parse(localStorage.getItem('users')) || [];
     
-    const user = users.find(user => user.username === username && user.password === password);
+    const user = users.find(user => user.email === email && user.password === password);
     if (user) {
       setCurrentUser(user);
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      localStorage.setItem('currentUser', JSON.stringify(user)); // Persist user session
       alert('Login successful');
-      router.push('/'); // Navigate to the homepage after successful login
-
+      router.push('/'); // Redirect to the homepage after login
     } else {
-      alert('Invalid username or password');
+      alert('Invalid email or password');
     }
   };
 
   // Log out user
   const logout = () => {
     setCurrentUser(null);
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUser'); // Clear session on logout
+    router.push('/login');
   };
 
+  // On app load, retrieve currentUser from localStorage
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem('currentUser'));
     if (savedUser) {
-      setCurrentUser(savedUser);
+      setCurrentUser(savedUser); // Restore user session on reload
     }
   }, []);
 

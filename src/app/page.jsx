@@ -3,18 +3,18 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from './context/AuthContext.js';
 
 export default function PokemonList() {
-  const { isAuthenticated } = useAuth();
-
+  const { isAuthenticated, currentUser } = useAuth();  // Access both isAuthenticated and currentUser
   const [pokemons, setPokemons] = useState([]);
   const [visiblePokemons, setVisiblePokemons] = useState([]);
   const [currentBatch, setCurrentBatch] = useState(0);
 
-  // Redirect to login if not authenticated
+  // Check authentication status
   useEffect(() => {
-    if (!isAuthenticated) {
-      window.location.href = '/login'; // Redirect to login page if not authenticated
+    const savedUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!savedUser) {
+      window.location.href = '/login'; // Redirect to login only if no user is found in localStorage
     }
-  }, [isAuthenticated]);
+  }, []);
 
   // Function to fetch Pokémon
   const fetchResult = async (id) => {

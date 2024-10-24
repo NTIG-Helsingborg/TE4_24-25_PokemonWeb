@@ -1,4 +1,3 @@
-// PokemonList.js
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext'; // Import useAuth
@@ -20,12 +19,13 @@ export default function PokemonList() {
   const [favourites, setFavourites] = useState([]);
   const [searchTerm, setSearchTerm] = useState(''); // State to store search input
 
-  // Redirect to login if not authenticated
+  // Check for persisted session in localStorage and redirect if not authenticated
   useEffect(() => {
-    if (!currentUser) {
-      window.location.href = '/login'; // Redirect to login page if not authenticated
+    const savedUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!savedUser) {
+      window.location.href = '/login'; // Redirect to login page if no user is found in localStorage
     }
-  }, [currentUser]);
+  }, []);
 
   // Fetch Pokémon and load favourites from localStorage when the component mounts
   useEffect(() => {

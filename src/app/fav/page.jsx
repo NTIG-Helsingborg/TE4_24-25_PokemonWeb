@@ -18,12 +18,13 @@ export default function Favourites() {
   const [favourites, setFavourites] = useState([]);
   const [searchTerm, setSearchTerm] = useState(''); // State to store search input
 
-  // Redirect to login if not authenticated
+  // Check localStorage for saved session and redirect if not authenticated
   useEffect(() => {
-    if (!currentUser) {
-      window.location.href = '/login'; // Redirect to login page if not authenticated
+    const savedUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!savedUser) {
+      window.location.href = '/login'; // Redirect to login page if no user is found in localStorage
     }
-  }, [currentUser]);
+  }, []);
 
   // useEffect to load favourites from localStorage when the component mounts
   useEffect(() => {

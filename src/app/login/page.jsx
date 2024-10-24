@@ -5,12 +5,12 @@ import Link from "next/link";
 
 export default function LoginPage() {
   const { login } = useAuth();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState(''); // Use email instead of username
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(username, password);
+    login(email, password);
   };
 
   return (
@@ -18,10 +18,10 @@ export default function LoginPage() {
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <input 
-          type="text" 
-          placeholder="Username" 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
+          type="email" // Set input type to email
+          placeholder="Email"
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
         />
         <input 
           type="password" 

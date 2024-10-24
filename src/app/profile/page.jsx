@@ -12,12 +12,13 @@ export default function Profile() {
   const { logout, currentUser } = useAuth(); // Access the logout function and currentUser
   const [favouriteCount, setFavouriteCount] = useState(0); // State to store the number of favourite Pokémon
 
-  // Redirect to login if not authenticated
+  // Check localStorage for saved session and redirect if not authenticated
   useEffect(() => {
-    if (!currentUser) {
-      window.location.href = '/login'; // Redirect to login page if not authenticated
+    const savedUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!savedUser) {
+      window.location.href = '/login'; // Redirect to login page if no user is found in localStorage
     }
-  }, [currentUser]);
+  }, []);
 
   // useEffect to load the number of favourite Pokémon when the component mounts
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function Profile() {
   // Handle logout
   const handleLogout = () => {
     logout(); // Call the logout function
+    localStorage.removeItem('currentUser'); // Clear the saved user session
     window.location.href = '/login'; // Redirect to login page after logout
   };
 

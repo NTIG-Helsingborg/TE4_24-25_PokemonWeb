@@ -52,9 +52,8 @@ const navStyle = {
   justifyContent: "space-between",
   alignItems: "center",
   padding: "1rem 2rem",
-  backgroundColor: "#000", // Slightly lighter for a softer feel
+  backgroundColor: "transparent", // Slightly lighter for a softer feel
   color: "#fff",
-  boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)",
   borderRadius: "8px", // Adds rounded corners for a smoother look
 };
 

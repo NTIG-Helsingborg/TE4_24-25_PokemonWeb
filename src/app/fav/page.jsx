@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext'; // Import useAuth
 
 // Function to get favourites from localStorage
 const getFromLocalStorage = () => {
@@ -13,8 +14,16 @@ const saveToLocalStorage = (items) => {
 };
 
 export default function Favourites() {
+  const { currentUser } = useAuth(); // Access currentUser from context
   const [favourites, setFavourites] = useState([]);
   const [searchTerm, setSearchTerm] = useState(''); // State to store search input
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!currentUser) {
+      window.location.href = '/login'; // Redirect to login page if not authenticated
+    }
+  }, [currentUser]);
 
   // useEffect to load favourites from localStorage when the component mounts
   useEffect(() => {
@@ -26,10 +35,9 @@ export default function Favourites() {
   const removeFromFavourites = (pokemonId) => {
     const updatedFavourites = favourites.filter((pokemon) => pokemon.id !== pokemonId);
     setFavourites(updatedFavourites);
-    saveToLocalStorage(updatedFavourites); // Update localStorage with the new favourites list
+    saveToLocalStorage(updatedFavourites);
   };
 
-    // Filter favourites based on search term, ensuring it matches the start of the name
   const filteredFavourites = favourites.filter((pokemon) =>
     pokemon.name.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
@@ -43,14 +51,12 @@ export default function Favourites() {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)} // Update search term
       />
-      {/* Check if favourites is empty */}
       {favourites.length === 0 ? (
-        <p>No favourite pokemons added</p> // Display this if there are no favourites
+        <p>No favourite pokemons added</p>
       ) : filteredFavourites.length === 0 ? (
-        <p>No favourite Pokémon matching the search.</p> // Display this if the search returns no results
+        <p>No favourite Pokémon matching the search.</p>
       ) : (
         filteredFavourites.map((data) => {
-            console.log(data);
           const abilities = data.abilities.map((a) => a.ability.name).join(', ');
           const height = data.height / 10; // Height in meters
           const weight = data.weight / 10; // Weight in kg
@@ -60,7 +66,6 @@ export default function Favourites() {
               <img src={data.sprites.front_default} alt={data.name} />
               <p>Abilities: {abilities}</p>
               <p>Height: {height} m, Weight: {weight} kg</p>
-              {/* Remove button renamed to "-" */}
               <button onClick={() => removeFromFavourites(data.id)}>
                 -
               </button>

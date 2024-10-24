@@ -1,6 +1,6 @@
 'use client';
 import { createContext, useState, useContext, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // Import useRouter
 
 const AuthContext = createContext();
 
@@ -8,9 +8,9 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const router = useRouter();
+  const router = useRouter(); // Initialize useRouter
 
-  const isAuthenticated = currentUser !== null;
+  const isAuthenticated = currentUser !== null; // Determine if user is authenticated
 
   // Register user
   const register = (email, password) => {
@@ -18,16 +18,16 @@ export const AuthProvider = ({ children }) => {
     
     const userExists = users.find(user => user.email === email);
     if (userExists) {
-      alert('Email already registered');
+      alert('User already exists');
       return;
     }
-
-    const newUser = { email, password }; // Store email instead of username
+    
+    const newUser = { email, password }; // Hashing needed in real app
     users.push(newUser);
     
     localStorage.setItem('users', JSON.stringify(users));
     alert('Registration successful');
-    router.push('/login'); // Redirect to login page after registration
+    router.push('/login'); // Navigate to the login page after registration
   };
 
   // Login user
@@ -37,9 +37,9 @@ export const AuthProvider = ({ children }) => {
     const user = users.find(user => user.email === email && user.password === password);
     if (user) {
       setCurrentUser(user);
-      localStorage.setItem('currentUser', JSON.stringify(user)); // Persist user session
+      localStorage.setItem('currentUser', JSON.stringify(user));
       alert('Login successful');
-      router.push('/'); // Redirect to the homepage after login
+      router.push('/'); // Navigate to the homepage after successful login
     } else {
       alert('Invalid email or password');
     }
@@ -48,15 +48,13 @@ export const AuthProvider = ({ children }) => {
   // Log out user
   const logout = () => {
     setCurrentUser(null);
-    localStorage.removeItem('currentUser'); // Clear session on logout
-    router.push('/login');
+    localStorage.removeItem('currentUser');
   };
 
-  // On app load, retrieve currentUser from localStorage
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem('currentUser'));
     if (savedUser) {
-      setCurrentUser(savedUser); // Restore user session on reload
+      setCurrentUser(savedUser);
     }
   }, []);
 

@@ -19,21 +19,21 @@ export default function PokemonList() {
   const [favourites, setFavourites] = useState([]);
   const [searchTerm, setSearchTerm] = useState(''); // State to store search input
 
-  // Check for persisted session in localStorage and redirect if not authenticated
+  // Redirect to login if not authenticated
   useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (!savedUser) {
-      window.location.href = '/login'; // Redirect to login page if no user is found in localStorage
+    if (!currentUser) {
+      window.location.href = '/login'; // Redirect to login page if not authenticated
     }
-  }, []);
+  }, [currentUser]);
 
   // Fetch Pokémon and load favourites from localStorage when the component mounts
   useEffect(() => {
     const fetchAllPokemons = async () => {
       const pokemonData = [];
       for (let i = 1; i <= 20; i++) {
-        const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
-        pokemonData.push(await data.json());
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`); // Fixed URL syntax
+        const data = await response.json();
+        pokemonData.push(data);
       }
       pokemonData.sort((a, b) => a.name.localeCompare(b.name));
       setPokemons(pokemonData);

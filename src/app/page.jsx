@@ -1,4 +1,5 @@
 'use client';
+import "./globals.css";
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from './context/AuthContext.js';
 
@@ -63,21 +64,26 @@ export default function PokemonList() {
   }, [pokemons, displayNextBatch]);
 
   return (
-    <div id="pokemon-container">
-      <button onClick={randomizePokemons}>Randomize</button>
-      {visiblePokemons.map((data) => {
-        const abilities = data.abilities.map((a) => a.ability.name).join(', ');
-        const height = data.height / 10;
-        const weight = data.weight / 10;
-        return (
-          <div key={data.id} className="pokemon">
-            <h2>{data.name}</h2>
-            <img src={data.sprites.front_default} alt={data.name} />
-            <p>Abilities: {abilities}</p>
-            <p>Height: {height} m, Weight: {weight} kg</p>
-          </div>
-        );
-      })}
+    <div>
+      <div id="pokemon-container">
+        {visiblePokemons.map((data) => {
+          const abilities = data.abilities.map((a) => a.ability.name).join(', ');
+          const height = data.height / 10; // Height in meters
+          const weight = data.weight / 10; // Weight in kg
+
+          return (
+            <div key={data.id} className="pokemon">
+              <h2>{data.name}</h2>
+              <img src={data.sprites.front_default} alt={data.name} />
+              <p>Abilities: {abilities}</p>
+              <p>Height: {height} m, Weight: {weight} kg</p>
+            </div>
+          );
+        })}
+      </div>
+      <div className="button-container">
+        <button onClick={randomizePokemons}>Randomize</button>
+      </div>
     </div>
   );
 }

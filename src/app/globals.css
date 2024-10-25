@@ -18,6 +18,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  background-image: url('');
   
 }
 
@@ -32,16 +33,17 @@ body {
 /* Style for the navbar */
 nav ul li a {
   text-decoration: none;
-  color: #fff;
+  color: red;
   padding: 0.5rem 1rem;
   transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
   border-radius: 4px;
+  
 }
 
 nav ul li a:hover {
-  color: #ff6347; /* Light Coral Color */
+  color: black; /* Light Coral Color */
   transform: scale(1.05); /* Scale effect */
-  background-color: #f5ab20; /* Slight background change */
+  background-color: #050401; /* Slight background change */
 }
 
 

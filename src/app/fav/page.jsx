@@ -43,36 +43,39 @@ export default function Favourites() {
   );
 
   return (
-    <div id="favourites-container">
-      <h1>Your Favourite Pokémon</h1>
+    <div>
+      <div className="search-bar-container">
       <input
         type="text"
         placeholder="Search Favourites..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)} // Update search term
       />
-      {favourites.length === 0 ? (
-        <p>No favourite pokemons added</p>
-      ) : filteredFavourites.length === 0 ? (
-        <p>No favourite Pokémon matching the search.</p>
-      ) : (
-        filteredFavourites.map((data) => {
-          const abilities = data.abilities.map((a) => a.ability.name).join(', ');
-          const height = data.height / 10; // Height in meters
-          const weight = data.weight / 10; // Weight in kg
-          return (
-            <div key={data.id} className="pokemon">
-              <h2>{data.name}</h2>
-              <img src={data.sprites.front_default} alt={data.name} />
-              <p>Abilities: {abilities}</p>
-              <p>Height: {height} m, Weight: {weight} kg</p>
-              <button onClick={() => removeFromFavourites(data.id)}>
-                -
-              </button>
-            </div>
-          );
-        })
-      )}
+      </div>
+      <div id="pokemon-container">
+        {favourites.length === 0 ? (
+          <p>No favourite pokemons added</p>
+        ) : filteredFavourites.length === 0 ? (
+          <p>No favourite Pokémon matching the search.</p>
+        ) : (
+          filteredFavourites.map((data) => {
+            const abilities = data.abilities.map((a) => a.ability.name).join(', ');
+            const height = data.height / 10; // Height in meters
+            const weight = data.weight / 10; // Weight in kg
+            return (
+              <div key={data.id} className="pokemon">
+                <h2>{data.name}</h2>
+                <img src={data.sprites.front_default} alt={data.name} />
+                <p>Abilities: {abilities}</p>
+                <p>Height: {height} m, Weight: {weight} kg</p>
+                <button onClick={() => removeFromFavourites(data.id)}>
+                  -
+                </button>
+              </div>
+            );
+          })
+        )}
+      </div>
     </div>
   );
 }

@@ -18,7 +18,10 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
-  background-image: url('');
+  background-image: url('assets/homebg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   
 }
 
@@ -69,17 +72,20 @@ nav ul li a:hover {
 }
 
 .pokemon {
-  background-color: #ededed; /* Light background for the boxes */
-  border: 1px solid #e0e0e0; /* Light border for subtle separation */
+  background-color: rgba(255, 255, 255, 0.3); /* Light background with some transparency */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Transparent border */
   border-radius: 10px; /* Rounded corners */
   padding: 1rem; /* Padding inside the boxes */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
   text-align: center; /* Center-align text and image */
   transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effect */
-  display: flex; /* Make the Pokémon box a flex container */
+  display: flex; /* Flex container */
   flex-direction: column; /* Arrange items vertically */
   align-items: center; /* Center-align items horizontally */
   justify-content: center; /* Center-align items vertically */
+  backdrop-filter: blur(10px); /* Apply blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Support for older webkit browsers */
+  transition: backdrop-filter 0.3s, background-color 0.3s; /* Smooth transition */
 }
 
 .pokemon img {
@@ -90,13 +96,13 @@ nav ul li a:hover {
 .pokemon h2 {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #333; /* Darker color for the text */
+  color: #f1f1f1; /* Darker color for the text */
   margin-bottom: 0.5rem; /* Space below the name */
 }
 
 .pokemon p {
-  font-size: 0.9rem;
-  color: #555; /* Slightly muted color for extra info */
+  font-size: 1rem;
+  color: #ffffff; /* Slightly muted color for extra info */
   margin: 0.2rem 0; /* Consistent spacing between paragraphs */
 }
 
@@ -123,3 +129,19 @@ button:hover {
 }
 
 
+/* Search bar for the list page */
+
+.search-bar-container {
+  display: flex;
+  justify-content: center; /* Center the search bar horizontally */
+  margin-bottom: 1.5rem; /* Add space below the search bar */
+}
+
+.search-bar-container input {
+  width: 500px; /* Set a width for the search bar */
+  padding: 0.5rem; /* Add padding */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 1rem; /* Adjust font size */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}

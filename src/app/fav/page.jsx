@@ -47,7 +47,7 @@ export default function Favourites() {
       <div className="search-bar-container">
       <input
         type="text"
-        placeholder="Search Favourites..."
+        placeholder="Search Among Favourites..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)} // Update search term
       />

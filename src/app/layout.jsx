@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
                   Favourite
                 </Link>
               </li>
-              <li style={liStyle}>
+                <li style={liStyle}>
                 <Link href={"/profile"} style={linkStyle}>
                   Profile
                 </Link>
@@ -62,7 +62,6 @@ const navStyle = {
   alignItems: "center",
   padding: "1rem 2rem",
   backgroundColor: "transparent", // Slightly lighter for a softer feel
-  color: "#fff",
   borderRadius: "8px", // Adds rounded corners for a smoother look
 };
 

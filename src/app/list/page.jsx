@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext'; // Import useAuth
 
@@ -60,36 +61,43 @@ export default function PokemonList() {
   );
 
   return (
-    <div id="pokemon-container">
-      <input
-        type="text"
-        placeholder="Search Pokémon..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)} // Update search term
-      />
-      {filteredPokemons.length === 0 ? (
-        <p>No favourite Pokémon matching the search.</p>
-      ) : (
-        filteredPokemons.map((data) => {
-          const abilities = data.abilities.map((a) => a.ability.name).join(', ');
-          const height = data.height / 10; // Height in meters
-          const weight = data.weight / 10; // Weight in kg
-          return (
-            <div key={data.id} className="pokemon">
-              <h2>{data.name}</h2>
-              <img src={data.sprites.front_default} alt={data.name} />
-              <p>Abilities: {abilities}</p>
-              <p>Height: {height} m, Weight: {weight} kg</p>
-              <button
-                onClick={() => addToFavourites(data)}
-                disabled={isFavourite(data)} // Disable button if already a favourite
-              >
-                {isFavourite(data) ? '✔' : '+'}
-              </button>
-            </div>
-          );
-        })
-      )}
+    <div>
+      {/* Search Bar Container */}
+      <div className="search-bar-container">
+        <input
+          type="text"
+          placeholder="Search Pokémon..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+        />
+      </div>
+
+      {/* Pokémon List Container */}
+      <div id="pokemon-container">
+        {filteredPokemons.length === 0 ? (
+          <p>No favourite Pokémon matching the search.</p>
+        ) : (
+          filteredPokemons.map((data) => {
+            const abilities = data.abilities.map((a) => a.ability.name).join(', ');
+            const height = data.height / 10; // Height in meters
+            const weight = data.weight / 10; // Weight in kg
+            return (
+              <div key={data.id} className="pokemon">
+                <h2>{data.name}</h2>
+                <img src={data.sprites.front_default} alt={data.name} />
+                <p>Abilities: {abilities}</p>
+                <p>Height: {height} m, Weight: {weight} kg</p>
+                <button
+                  onClick={() => addToFavourites(data)}
+                  disabled={isFavourite(data)} // Disable button if already a favourite
+                >
+                  {isFavourite(data) ? '✔' : '+'}
+                </button>
+              </div>
+            );
+          })
+        )}
+      </div>
     </div>
   );
 }

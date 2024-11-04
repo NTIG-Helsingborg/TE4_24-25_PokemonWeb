@@ -40,6 +40,11 @@ export default function RootLayout({ children }) {
                   Favourite
                 </Link>
               </li>
+                <li style={liStyle}>
+                <Link href={"/profile"} style={linkStyle}>
+                  Profile
+                </Link>
+              </li>
             </ul>
           </nav>
         </header>

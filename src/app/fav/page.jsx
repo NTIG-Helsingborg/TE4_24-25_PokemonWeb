@@ -45,18 +45,22 @@ export default function Favourites() {
   return (
     <div>
       <div className="search-bar-container">
-      <input
-        type="text"
-        placeholder="Search Among Favourites..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)} // Update search term
-      />
+        <input
+          type="text"
+          placeholder="Search Among Favourites..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+        />
       </div>
       <div id="pokemon-container">
         {favourites.length === 0 ? (
-          <p>No favourite pokemons added</p>
+          <div style={styles.noAddMessage}>
+            <p>No favourite pokemons added</p>
+          </div>
         ) : filteredFavourites.length === 0 ? (
-          <p>No favourite Pokémon matching the search.</p>
+          <div style={styles.noMatchMessage}>
+            <p>No favourite Pokémon matching the search.</p>
+          </div>
         ) : (
           filteredFavourites.map((data) => {
             const abilities = data.abilities.map((a) => a.ability.name).join(', ');
@@ -78,4 +82,26 @@ export default function Favourites() {
       </div>
     </div>
   );
+}
+
+const styles = {
+  noAddMessage: {
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    color: 'white',
+    padding: '1rem',
+    backgroundColor: 'rgba(0, 0, 0, 0.63)',
+    textAlign: 'center',
+    marginTop: '15rem',
+  },
+
+  noMatchMessage: {
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    color: 'white',
+    padding: '1rem',
+    backgroundColor: 'rgba(0, 0, 0, 0.63)',
+    textAlign: 'center',
+    marginTop: '10rem',
+  }
 }

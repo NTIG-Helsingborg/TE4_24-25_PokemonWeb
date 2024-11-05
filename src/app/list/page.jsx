@@ -75,7 +75,9 @@ export default function PokemonList() {
       {/* Pokémon List Container */}
       <div id="pokemon-container">
         {filteredPokemons.length === 0 ? (
-          <p>No favourite Pokémon matching the search.</p>
+          <div style={styles.noMatchMessage}>
+            <p>No favourite Pokémon matching the search.</p>
+          </div>
         ) : (
           filteredPokemons.map((data) => {
             const abilities = data.abilities.map((a) => a.ability.name).join(', ');
@@ -101,3 +103,15 @@ export default function PokemonList() {
     </div>
   );
 }
+
+const styles = {
+  noMatchMessage: {
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    color: 'white',
+    padding: '1rem',
+    backgroundColor: 'rgba(0, 0, 0, 0.63)',
+    textAlign: 'center',
+    marginTop: '10rem',
+  },
+};

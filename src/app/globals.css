@@ -69,6 +69,7 @@ nav ul li a:hover {
   width: 100%; /* Ensure it takes full width up to max-width */
   margin: 0 auto; /* Center the container */
   padding: 2rem;
+  margin-top: 4rem;
 }
 
 .pokemon {
@@ -135,6 +136,7 @@ button:hover {
   display: flex;
   justify-content: center; /* Center the search bar horizontally */
   margin-bottom: 1.5rem; /* Add space below the search bar */
+  margin-top: 1rem;
 }
 
 .search-bar-container input {

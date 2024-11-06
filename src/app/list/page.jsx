@@ -1,4 +1,4 @@
-'use client';
+'use client'; //Indicates that following code should run on the client-side
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext'; // Import useAuth
@@ -8,16 +8,16 @@ const saveToLocalStorage = (items) => {
   localStorage.setItem('favourites', JSON.stringify(items));
 };
 
-// Function to get favourites from localStorage
+// Function to get favourites from localStorage, if no data is found, it returns an empty array.
 const getFromLocalStorage = () => {
-  const storedFavourites = localStorage.getItem('favourites');
+  const storedFavourites = localStorage.getItem('favourites');  
   return storedFavourites ? JSON.parse(storedFavourites) : [];
 };
 
 export default function PokemonList() {
   const { currentUser } = useAuth(); // Access currentUser from context
-  const [pokemons, setPokemons] = useState([]);
-  const [favourites, setFavourites] = useState([]);
+  const [pokemons, setPokemons] = useState([]); // State to hold the list of fetched Pokémon
+  const [favourites, setFavourites] = useState([]); //State to hold the list of favourite Pokémon
   const [searchTerm, setSearchTerm] = useState(''); // State to store search input
 
   // Redirect to login if not authenticated
@@ -29,10 +29,12 @@ export default function PokemonList() {
 
   // Fetch Pokémon and load favourites from localStorage when the component mounts
   useEffect(() => {
+
+    //An async function that fetches Pokémon data from an API, sorts it by name, and updates the pokemons state
     const fetchAllPokemons = async () => {
       const pokemonData = [];
       for (let i = 1; i <= 20; i++) {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`); // Fixed URL syntax
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`); 
         const data = await response.json();
         pokemonData.push(data);
       }
@@ -45,21 +47,24 @@ export default function PokemonList() {
     setFavourites(savedFavourites);
   }, []);
 
-  // Add to favourites function
+  // Add to favourites function, updates the favourites state, and saves the new list to localStorage
   const addToFavourites = (pokemon) => {
     const newFavourites = [...favourites, pokemon];
     setFavourites(newFavourites);
     saveToLocalStorage(newFavourites);
   };
 
+  //Checks if a Pokémon is already in the favourites list.
   const isFavourite = (pokemon) => {
     return favourites.some((fav) => fav.id === pokemon.id);
   };
 
+  //Filters the list of Pokémon based on the searchTerm. It only includes Pokémon whose names start with the search term
   const filteredPokemons = pokemons.filter((pokemon) =>
     pokemon.name.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
+  //Html code
   return (
     <div>
       {/* Search Bar Container */}
@@ -104,6 +109,7 @@ export default function PokemonList() {
   );
 }
 
+//Styling
 const styles = {
   noMatchMessage: {
     fontSize: '1.2rem',

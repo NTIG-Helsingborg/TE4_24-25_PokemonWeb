@@ -1,15 +1,16 @@
-'use client';
+'use client'; //Indicates that following code should run on the client-side
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext.js';
 
+// Function to get favourites from localStorage,  if no data is found, it returns an empty array.
 const getFromLocalStorage = () => {
   const storedFavourites = localStorage.getItem('favourites');
   return storedFavourites ? JSON.parse(storedFavourites) : [];
 };
 
 export default function Profile() {
-  const { logout, currentUser } = useAuth();
-  const [favouriteCount, setFavouriteCount] = useState(0);
+  const { logout, currentUser } = useAuth(); //Retrieved from AuthContext, these provide access to the current user’s data and the logout function.
+  const [favouriteCount, setFavouriteCount] = useState(0); //Keeps track of the number of favourite Pokémon the user has, updated once the favourites are retrieved from localStorage
   const [fontSize, setFontSize] = useState(16); // State to store font size
 
   useEffect(() => {
@@ -18,20 +19,23 @@ export default function Profile() {
     }
   }, [currentUser]);
 
+  // Calls getFromLocalStorage to retrieve the list of favourite Pokémon and updates favouriteCount with the length of the retrieved list.
   useEffect(() => {
     const savedFavourites = getFromLocalStorage();
     setFavouriteCount(savedFavourites.length);
   }, []);
 
+  //Function that logs the user out by calling logout (from AuthContext) and redirects them to the login page
   const handleLogout = () => {
     logout();
     window.location.href = '/login';
   };
 
   // Functions to adjust font size
-  const increaseFontSize = () => setFontSize((prevSize) => prevSize + 2);
-  const decreaseFontSize = () => setFontSize((prevSize) => Math.max(10, prevSize - 2)); // Minimum font size of 10
+  const increaseFontSize = () => setFontSize((prevSize) => prevSize + 2); //Increases the fontSize state by 2 pixels.
+  const decreaseFontSize = () => setFontSize((prevSize) => Math.max(10, prevSize - 2)); //Decreases fontSize by 2 pixels but ensures it does not go below a minimum value of 10.
 
+  //Html code
   return (
     <div style={styles.container}>
       <div style={styles.profileBox}>
@@ -52,6 +56,7 @@ export default function Profile() {
   );
 }
 
+//Styling
 const styles = {
   container: {
     display: 'flex',

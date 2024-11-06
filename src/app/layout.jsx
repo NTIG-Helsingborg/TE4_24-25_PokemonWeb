@@ -15,6 +15,7 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+//Structure for the web application
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -56,6 +57,7 @@ export default function RootLayout({ children }) {
   );
 }
 
+//Styling
 const navStyle = {
   display: "flex",
   justifyContent: "space-between",

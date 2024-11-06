@@ -1,8 +1,8 @@
-'use client';
+'use client'; //Indicates that following code should run on the client-side
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext'; // Import useAuth
 
-// Function to get favourites from localStorage
+// Function to get favourites from localStorage,  if no data is found, it returns an empty array.
 const getFromLocalStorage = () => {
   const storedFavourites = localStorage.getItem('favourites');
   return storedFavourites ? JSON.parse(storedFavourites) : [];
@@ -15,7 +15,7 @@ const saveToLocalStorage = (items) => {
 
 export default function Favourites() {
   const { currentUser } = useAuth(); // Access currentUser from context
-  const [favourites, setFavourites] = useState([]);
+  const [favourites, setFavourites] = useState([]); //State that holds the list of favourite Pokémon
   const [searchTerm, setSearchTerm] = useState(''); // State to store search input
 
   // Redirect to login if not authenticated
@@ -32,16 +32,20 @@ export default function Favourites() {
   }, []);
 
   // Function to remove a Pokémon from favourites
-  const removeFromFavourites = (pokemonId) => {
+  const removeFromFavourites = (pokemonId) => {  //The unique identifier of the Pokémon to be removed.
+
+    //Filters the favourites list to exclude the Pokémon with the specified pokemonId.
     const updatedFavourites = favourites.filter((pokemon) => pokemon.id !== pokemonId);
-    setFavourites(updatedFavourites);
-    saveToLocalStorage(updatedFavourites);
+    setFavourites(updatedFavourites); //Updates the favourites state with the new array.
+    saveToLocalStorage(updatedFavourites); //Saves the updated favourites list to localStorage.
   };
 
+  //Holds the list of favourite Pokémon whose names start with the characters entered in the searchTerm
   const filteredFavourites = favourites.filter((pokemon) =>
-    pokemon.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+    pokemon.name.toLowerCase().startsWith(searchTerm.toLowerCase()) //Uses the startsWith method to filter Pokémon names that begin with the searchTerm entered by the user.
   );
 
+  //Html code
   return (
     <div>
       <div className="search-bar-container">
@@ -84,6 +88,7 @@ export default function Favourites() {
   );
 }
 
+//Styling
 const styles = {
   noAddMessage: {
     fontSize: '1.2rem',

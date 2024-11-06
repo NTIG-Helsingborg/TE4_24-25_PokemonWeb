@@ -1,18 +1,23 @@
-'use client';
+'use client'; //Indicates that following code should run on the client-side
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext.js';
 import Link from "next/link";
 
 export default function RegisterPage() {
+  //Returns an object containing authentication-related functions and data. In this case, register function from the AuthContext, which will allow users to log in.
   const { register } = useAuth();
+
+  //Holds user's email and password. setEmail and setPassword are functions that update the respective states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+    //Calls the login function from the AuthContext, passing in the email and password from the component state. Happens when we submit
   const handleSubmit = (e) => {
     e.preventDefault();
     register(email, password);
   };
 
+  //Html code
   return (
     <div style={styles.container}>
       <div style={styles.formContainer}>
@@ -35,13 +40,14 @@ export default function RegisterPage() {
           <button type="submit" style={styles.button}>Register</button>
         </form>
         <p style={styles.linkText}>
-          Already have an account? <Link href="/login" style={styles.link}>Login here</Link>
+          {`Already have an account?`} <Link href="/login" style={styles.link}>Login here</Link>
         </p>
       </div>
     </div>
   );
 }
 
+//Styling
 const styles = {
   container: {
     display: 'flex',

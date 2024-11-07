@@ -1,6 +1,5 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
-
 export default function PokemonList() {
   const [pokemons, setPokemons] = useState([]);
   const [visiblePokemons, setVisiblePokemons] = useState([]);
@@ -69,21 +68,18 @@ export default function PokemonList() {
   }, [pokemons, displayNextBatch]);
 
   return (
-    <div id="pokemon-container">
+    <div>
       <button onClick={randomizePokemons}>Randomize</button>
 
       {visiblePokemons.map((data) => {
         console.log(data);
-        const abilities = data.abilities.map((a) => a.ability.name).join(', ');
-        const height = data.height / 10; // Height in meters
-        const weight = data.weight / 10; // Weight in kg
 
         return (
-          <div key={data.id} className="pokemon">
-            <h2>{data.name}</h2>
-            <img src={data.sprites.front_default} alt={data.name} />
-            <p>Abilities: {abilities}</p>
-            <p>Height: {height} m, Weight: {weight} kg</p>
+          <div>
+            <div key={data.id} className="w-1/2 md:w-1/3 lg:w-1/5 h-auto ">
+              <h2 class="text-xl font-semibold mb-2 text-gray-800">{data.name}</h2>
+              <img className='basis-1/5' src={data.sprites.front_default} alt={data.name} />
+            </div>
           </div>
         );
       })}

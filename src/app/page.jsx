@@ -1,11 +1,23 @@
-'use client';
+'use client'; //Indicates that following code should run on the client-side
+import "./globals.css";
 import React, { useState, useEffect, useCallback } from 'react';
-export default function PokemonList() {
-  const [pokemons, setPokemons] = useState([]);
-  const [visiblePokemons, setVisiblePokemons] = useState([]);
-  const [currentBatch, setCurrentBatch] = useState(0);
 
-  // Function to fetch a single Pokémon by its ID
+export default function PokemonList() {
+  const { isAuthenticated } = useAuth(); //Used to get the isAuthenticated property, which indicates if a user is logged in.
+ 
+  //State variabler
+  const [pokemons, setPokemons] = useState([]);  //Holds the full list of Pokémon data.
+  const [visiblePokemons, setVisiblePokemons] = useState([]); //Holds the Pokémon data to be currently displayed.
+  const [currentBatch, setCurrentBatch] = useState(0); //Keeps track of the current "batch" (group) of Pokémon being displayed.
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      window.location.href = '/login'; // Redirect to login page if not authenticated
+    }
+  }, [isAuthenticated]);
+
+  // Asynchronous function to fetch Pokémon by id from the PokéAPI
   const fetchResult = async (id) => {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     const res = await fetch(url);
@@ -13,73 +25,73 @@ export default function PokemonList() {
     return json;
   };
 
-  // Function to fetch all Pokémon and set state
+  // Fetch all Pokémon data using a loop to call fetchResult
   const fetchAllPokemons = async () => {
     const pokemonData = [];
-
-    // Fetch Pokémon data for IDs 1 to 45
     for (let i = 1; i <= 20; i++) {
       const data = await fetchResult(i);
       pokemonData.push(data);
     }
 
-    // Sort Pokémon by name
+    //After fetching, it sorts the Pokémon alphabetically by name
     pokemonData.sort((a, b) => a.name.localeCompare(b.name));
-
-    // Update the state with the fetched and sorted data
-    setPokemons(pokemonData);
+    setPokemons(pokemonData); //Updates the pokemons state with the sorted data, making it ready for display.
   };
 
-  // Function to display Pokémon in batches of 5
-  const displayNextBatch = useCallback(() => {
+  //Defines how to display the next batch of 5 Pokémon.
+  const displayNextBatch = useCallback(() => { //Only re-computes if pokemons or currentBatch changes.
+
+    //nextBatchStart and nextBatchEnd are calculated based on currentBatch.
     const nextBatchStart = currentBatch * 5;
     const nextBatchEnd = nextBatchStart + 5;
-    const nextBatch = pokemons.slice(nextBatchStart, nextBatchEnd);
-    
+    const nextBatch = pokemons.slice(nextBatchStart, nextBatchEnd); //nextBatch holds the sliced array of 5 Pokémon
     setVisiblePokemons(nextBatch);
 
-    // Update to the next batch; reset to 0 if we've reached the end of the list
+    //currentBatch is updated to cycle through the available batches by using the remainder operator %
     setCurrentBatch((prevBatch) => (prevBatch + 1) % Math.ceil(pokemons.length / 5));
   }, [pokemons, currentBatch]);
 
-  // Randomize button functionality
+  //Randomizes the list of pokemons to display a random set of 5 Pokémon
   const randomizePokemons = () => {
-    const shuffledPokemons = [...pokemons].sort(() => 0.5 - Math.random());
+    //Copies pokemons, shuffles it, and slices the first 5 items to display
+    const shuffledPokemons = [...pokemons].sort(() => 0.5 - Math.random()); 
     const randomBatch = shuffledPokemons.slice(0, 5);
-    setVisiblePokemons(randomBatch);
+    setVisiblePokemons(randomBatch); //Updates visiblePokemons with the random batch, allowing a refresh of displayed Pokémon
   };
 
-  // useEffect to fetch all Pokémon on mount
+  //Calls fetchAllPokemons() to populate pokemons with data fetch
   useEffect(() => {
     fetchAllPokemons();
   }, []);
 
-  // Timer effect to update visiblePokemons every 5 seconds
+  /*Sets up a 5-second interval to call displayNextBatch if pokemons has been loaded. Every 5 seconds, it cycles to the next batch of Pokémon.
+  When the component unmounts, clearInterval ensures the interval is cleaned up, preventing memory leaks. */
   useEffect(() => {
     if (pokemons.length > 0) {
-      // Start the timer
       const intervalId = setInterval(() => {
         displayNextBatch();
       }, 5000);
-
-      // Cleanup timer on component unmount
       return () => clearInterval(intervalId);
     }
   }, [pokemons, displayNextBatch]);
 
+  //Html code
   return (
-    <div>
+    <div id="pokemon-container">
       <button onClick={randomizePokemons}>Randomize</button>
 
       {visiblePokemons.map((data) => {
         console.log(data);
+        const abilities = data.abilities.map((a) => a.ability.name).join(', ');
+        const height = data.height / 10; // Height in meters
+        const weight = data.weight / 10; // Weight in kg
 
         return (
-          <div>
-            <div key={data.id} className="w-1/2 md:w-1/3 lg:w-1/5 h-auto ">
-              <h2 class="text-xl font-semibold mb-2 text-gray-800">{data.name}</h2>
-              <img className='basis-1/5' src={data.sprites.front_default} alt={data.name} />
-            </div>
+          <div key={data.id} className="pokemon">
+            <h2>{data.name}</h2>
+            <img src={data.sprites.front_default} alt={data.name} />
+            <p>Abilities: {abilities}</p>
+            <p>Height: {height} m, Weight: {weight} kg</p>
           </div>
         );
       })}

@@ -87,7 +87,7 @@ const styles = {
   },
   logoutButton: {
     padding: '0.75rem',
-    backgroundColor: '#ded806',
+    backgroundColor: '#d66a76',
     color: '#ffffff',
     fontSize: '1rem',
     border: 'none',
@@ -104,7 +104,7 @@ const styles = {
   fontSizeButton: {
     padding: '0.5rem 1rem',
     backgroundColor: '#333',
-    color: '#ded806',
+    color: '#ffffff',
     fontSize: '1rem',
     border: 'none',
     borderRadius: '5px',

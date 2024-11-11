@@ -10,7 +10,7 @@ const saveToLocalStorage = (items) => {
 
 // Function to get favourites from localStorage, if no data is found, it returns an empty array.
 const getFromLocalStorage = () => {
-  const storedFavourites = localStorage.getItem('favourites');  
+  const storedFavourites = localStorage.getItem('favourites');
   return storedFavourites ? JSON.parse(storedFavourites) : [];
 };
 
@@ -34,7 +34,7 @@ export default function PokemonList() {
     const fetchAllPokemons = async () => {
       const pokemonData = [];
       for (let i = 1; i <= 20; i++) {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`); 
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
         const data = await response.json();
         pokemonData.push(data);
       }
@@ -78,12 +78,13 @@ export default function PokemonList() {
       </div>
 
       {/* Pokémon List Container */}
-      <div id="pokemon-container">
-        {filteredPokemons.length === 0 ? (
-          <div style={styles.noMatchMessage}>
-            <p>No favourite Pokémon matching the search.</p>
-          </div>
-        ) : (
+      {filteredPokemons.length === 0 ? (
+        <div style={styles.noMatchMessage}>
+          <p>No favourite Pokémon matching the search</p>
+        </div>
+
+      ) : (
+        <div id="pokemon-container">{
           filteredPokemons.map((data) => {
             const abilities = data.abilities.map((a) => a.ability.name).join(', ');
             const height = data.height / 10; // Height in meters
@@ -103,8 +104,8 @@ export default function PokemonList() {
               </div>
             );
           })
-        )}
-      </div>
+        }</div>
+      )}
     </div>
   );
 }
@@ -118,6 +119,8 @@ const styles = {
     padding: '1rem',
     backgroundColor: 'rgba(0, 0, 0, 0.63)',
     textAlign: 'center',
-    marginTop: '10rem',
+    marginTop: '5rem',
+    marginLeft: '50rem',
+    marginRight: '50rem',
   },
 };

@@ -56,16 +56,18 @@ export default function Favourites() {
           onChange={(e) => setSearchTerm(e.target.value)} // Update search term
         />
       </div>
-      <div id="pokemon-container">
-        {favourites.length === 0 ? (
-          <div style={styles.noAddMessage}>
-            <p>No favourite pokemons added</p>
-          </div>
-        ) : filteredFavourites.length === 0 ? (
-          <div style={styles.noMatchMessage}>
-            <p>No favourite Pokémon matching the search.</p>
-          </div>
-        ) : (
+
+      {favourites.length === 0 ? (
+        <div style={styles.noAddMessage}>
+          <p>No favourite pokemons added</p>
+        </div>
+      ) : filteredFavourites.length === 0 ? (
+        <div style={styles.noMatchMessage}>
+          <p>No favourite Pokémon matching the search</p>
+        </div>
+      ) : (
+
+        <div id="pokemon-container">{
           filteredFavourites.map((data) => {
             const abilities = data.abilities.map((a) => a.ability.name).join(', ');
             const height = data.height / 10; // Height in meters
@@ -81,9 +83,10 @@ export default function Favourites() {
                 </button>
               </div>
             );
-          })
-        )}
-      </div>
+          })}
+        </div>
+      )}
+
     </div>
   );
 }
@@ -97,7 +100,9 @@ const styles = {
     padding: '1rem',
     backgroundColor: 'rgba(0, 0, 0, 0.63)',
     textAlign: 'center',
-    marginTop: '15rem',
+    marginTop: '5rem',
+    marginLeft: '50rem',
+    marginRight: '50rem',
   },
 
   noMatchMessage: {
@@ -107,6 +112,8 @@ const styles = {
     padding: '1rem',
     backgroundColor: 'rgba(0, 0, 0, 0.63)',
     textAlign: 'center',
-    marginTop: '10rem',
+    marginTop: '5rem',
+    marginLeft: '50rem',
+    marginRight: '50rem',
   }
 }

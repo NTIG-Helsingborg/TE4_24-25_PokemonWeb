@@ -12,7 +12,7 @@ const nextConfig = {
      *
      * @see https://nextjs.org/docs/app/api-reference/next-config-js/basePath
      */
-    basePath: "/TE4_24-25_PokemonWeb",
+    basePath: "/TE4_24-25_PokemonWeb/",
   
     /**
      * Disable server-based image optimization. Next.js does not support

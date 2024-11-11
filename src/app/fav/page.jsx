@@ -21,7 +21,7 @@ export default function Favourites() {
   // Redirect to login if not authenticated
   useEffect(() => {
     if (!currentUser) {
-      window.location.href = '/login'; // Redirect to login page if not authenticated
+      window.location.href = '/TE4_24-25_PokemonWeb/login'; // Redirect to login page if not authenticated
     }
   }, [currentUser]);
 

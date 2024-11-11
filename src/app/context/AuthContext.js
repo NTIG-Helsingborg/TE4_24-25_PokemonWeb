@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     //The updated user list is then saved back to localStorage.
     localStorage.setItem('users', JSON.stringify(users));
     alert('Registration successful');
-    router.push('/login'); // Navigate to the login page after registration
+    router.push('/TE4_24-25_PokemonWeb/login'); // Navigate to the login page after registration
   };
 
   // Login user function
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(user);
       localStorage.setItem('currentUser', JSON.stringify(user));
       alert('Login successful');
-      router.push('/'); // Navigate to the homepage after successful login
+      router.push('/TE4_24-25_PokemonWeb/'); // Navigate to the homepage after successful login
     } else {
       alert('Invalid email or password'); //If no match is found, it alerts the user about the invalid credentials
     }

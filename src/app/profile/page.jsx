@@ -15,7 +15,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (!currentUser) {
-      window.location.href = '/login';
+      window.location.href = '/TE4_24-25_PokemonWeb/login';
     }
   }, [currentUser]);
 
@@ -28,7 +28,7 @@ export default function Profile() {
   //Function that logs the user out by calling logout (from AuthContext) and redirects them to the login page
   const handleLogout = () => {
     logout();
-    window.location.href = '/login';
+    window.location.href = '/TE4_24-25_PokemonWeb/login';
   };
 
   // Functions to adjust font size

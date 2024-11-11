@@ -14,7 +14,7 @@ export default function PokemonList() {
   // Redirect to login if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
-      window.location.href = '/login'; // Redirect to login page if not authenticated
+      window.location.href = '/TE4_24-25_PokemonWeb/login'; // Redirect to login page if not authenticated
     }
   }, [isAuthenticated]);
 

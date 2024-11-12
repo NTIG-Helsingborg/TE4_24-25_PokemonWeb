@@ -34,7 +34,7 @@ export const useAuth = () => {
 			//If a match is found, it updates the currentUser state, saves the user to localStorage
 			if (user) {
 				localStorage.setItem("currentUser", JSON.stringify(user))
-        output_object.currentUser=JSON.stringify(user)
+        output_object.currentUser=user
 				alert("Login successful")
 				location.href = "/TE4_24-25_PokemonWeb/"
 			} else {

@@ -49,7 +49,7 @@ export const useAuth = () => {
 		},
 	}
   if (typeof window !== 'undefined') {
-    output_object.currentUser=localStorage?.getItem("currentUser")
+    output_object.currentUser=JSON.parse(localStorage?.getItem("currentUser"))
   }
 	return output_object
 }

@@ -15,17 +15,17 @@ const getFromLocalStorage = () => {
 };
 
 export default function PokemonList() {
-  const { currentUser } = useAuth(); // Access currentUser from context
+  const { isAuthenticated } = useAuth(); // Access currentUser from context
   const [pokemons, setPokemons] = useState([]); // State to hold the list of fetched Pokémon
   const [favourites, setFavourites] = useState([]); //State to hold the list of favourite Pokémon
   const [searchTerm, setSearchTerm] = useState(''); // State to store search input
 
   // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!currentUser) {
+  if (!isAuthenticated) {
+    if (typeof window !== 'undefined') {
       window.location.href = '/TE4_24-25_PokemonWeb/login'; // Redirect to login page if not authenticated
     }
-  }, [currentUser]);
+  }
 
   // Fetch Pokémon and load favourites from localStorage when the component mounts
   useEffect(() => {
